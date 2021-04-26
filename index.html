@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html lang = "eng">
+<head>
+	<meta charset="UTF-8">
+	<title>Finite States</title>
+
+	<script type="module" src="src/game.js"></script>
+	<script type="module" src="fent-randexp/randexp.min.js"></script>
+
+	<script type="module" src="node_modules/@shailpatels/fss/src/canvas.js"></script>
+	<script type="module" src="node_modules/@shailpatels/fss/src/api.js"></script>
+	<script type="module" src="node_modules/@shailpatels/fss/src/simulate.js"></script>
+
+	<script type="module" src="src/finite_automata.js"></script>
+	<script type="module" src="src/pushdown.js"></script>
+	<script type="module" src="src/turing_machine.js"></script>
+	<script type="module" src="src/stats_recorder.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+	<canvas id="confetti_canvas" style="position: absolute; width: 100%;height: 100%;z-index: 99;top: 0;left: 0;display: none;" >
+	</canvas>
+
+	<div class="row">
+		<div id="welcome" style="display: none;">
+		<h2>Welcome to Finite States!</h2>
+		<p>A puzzle game about solving simple problems with different types of models of computation. 
+		Before we begin, how familiar are you with models of computation from theoretical computer science. 0
+		Being no knowledge and 10 being an expert. </p>
+		<div style="text-align: center;">
+			0
+			<input type="range" name="expertise" id="player-expertise" min="0" max="10" list="tickmarks">
+			10
+			<datalist id="tickmarks">
+			  <option value="0"></option>
+			  <option value="1"></option>
+			  <option value="2"></option>
+			  <option value="3"></option>
+			  <option value="4"></option>
+			  <option value="5"></option>
+			  <option value="6"></option>
+			  <option value="7"></option>
+			  <option value="8"></option>
+			  <option value="9"></option>
+			  <option value="10"></option>
+			</datalist>
+
+
+			<br>
+			<label for="expertise"> Familiarity</label>
+			<br><br>
+		<button id="welcome-close">Submit</button>
+		</div>
+	</div>
+	</div>
+
+	<div class="row">
+	<div id="help" style="display: none;">
+		<h2>Finite States Help</h2>
+		<button id="close1">Close</button>
+		<p><i>Note</i> If you ever run into a bug, refresh the page to reload the current level.</p>
+		<h3>Basic Controls</h3>
+		<ul>
+		<li>Double click to create a new state</li>
+		<li>Double click a state to mark it as accept, double click it again to mark it a normal state</li>
+		<li>Shift+click from one state to a second state to create a transition, the second state can be the same as the first</li>
+		<li>Click on a transition to edit its symbol matching options</li>
+		</ul>
+		<h3>Deterministic Finite Automata (DFA)</h3>
+		<p>DFAs are the simplest type of automata, they do not have branches or epsilon (empty symbol) transitions. When pressing step, the next symbol will be read from the right side table and the current state will test all outgoing
+			branches if any match. The starting state will always be S<sub>0</sub>. </p>
+		<p>Formally a DFA must have a branch for every possible input it could receive, however in Finite States, this is not needed, assume if a symbol is not matched by any branch the DFA transitions to a reject state.</p>
+		<h3>NonDeterministic Finite Automata (NFA)</h3>
+		<p>NFAs have the power to 'guess' by matching 1 symbol against many different branches. NFAs also have the 
+		epsilon transition which matches the empty symbol. An epsilon transition will always be followed no matter what 
+	and will not consume any input. Although NFAs have these additional properties, they are only as powerful as DFAs and in fact, any NFA can be represented as a DFA.</p>
+	<div style="text-align: center;">
+		<img src="src/img/nfa1.png" height="250px" alt="Example NFA">
+	</div>
+	<p>For example the above NFA is a good way of trying out two paths before reading any input, if you know your 
+	result can be found in 2 branches, you can nondeterminstically try them both and see which accepts.</p>
+	<p>If one branch accepts, the entire NFA will accept the input, as long as there are other branches to run, if a branch rejects the NFA will continue. If all branches reject then the NFA will reject the input.</p>
+	<h3>Pushdown automata (PD)</h3>
+	<p>PDs are the first automata to have external memory, called the stack. Pushing a symbol will add it to the top and poping a symbol will remove to topmost element. If the stack is empty, poping will do nothing. PDs have the 
+		ability to match what to pop, for example the transition <i>a : ← b</i> indicates on input symbol <i>a</i>
+		and if the top of the stack is a <i>b</i> pop a b. If the stack comparison fails, the transition is not taken.
+		When pushing an element the stack is not compared to. Remember you still have the power of nondeterminism and DFAs, by setting the output to blank, the transition will act like on in a NFA or DFA.</p>
+		<h4>Checking if the stack is empty</h4>
+		<p>By default PDs do not have a method of checking if the stack is empty, one way to do this is to designate 
+		a special symbol as the bottom of the stack, once that symbol is removed you know the stack is empty. Here is an example</p>
+
+		<div style="text-align: center;" >
+			<img src="src/img/pd1.png" height="250px" alt="Example PD" style="border: solid;"> 
+		</div>
+
+		<p>Before reading any input, the above PD pushes a <i>$</i> onto the stack, it then moves to S<sub>1</sub>
+		which at every step nondeterminstically does some work and also checks if the stack is empty by branching to 
+		S<sub>3</sub> and trying to push the special symbol off. If it does, then it accepts otherwise the branch 
+	rejects and we try again next step.</p>
+	<h3>Turing Machine(TM)</h3>
+	<p>The TM is the most powerful model of computation and has an infinite amount of external memory. It has a tape head 
+	which can read and write to from its current position and can be moved left or right.</p>
+	<p>At each step, the TM must move either left or right, by default it will move left. The second textbox is the symbol
+		to write to that tape cell, in general the syntax for a transition <i>a : b → L </i>  which means on reading the symbol 
+		<i>a</i>
+		</i>, write a <i>b</i> over the current cell, and then move left.
+		<p>The default symbol on the tape is the blank symbol, represented by an underscore ( <i>_</i> ). If you leave
+		the second textarea blank, the TM will not write to the current cell, this is just short hand for 
+		<i>x : x → L/R </i> 
+	</p>
+	<button id="close2">Close</button>
+	</div>
+	</div>
+
+	<div class="row">
+		<div id="desc" class="col">
+
+		</div>
+	</div>	
+
+	<div class="row" style="height: 30px;">
+		<div id="branches">
+		</div>
+	</div>
+
+	<div class="row">
+		<div id="tape-container">
+
+		</div>
+	</div>
+
+	<div class="row">
+
+		<div class="col" id="col-left">
+			<table id="stack" style="display: none;">
+				<thead>
+					<tr>
+					<th>Stack</th>
+					</tr>
+				</thead>
+				<tbody id="stack_inner">
+					
+				</tbody>
+			</table>
+		</div>
+
+		<canvas class="col" id="canvas" oncontextmenu="return false;" style="margin-top: 5px;margin-bottom: 5px;"></canvas>
+
+		<div class="col">
+			<table id="ioTable">
+				<thead>
+				<tr>
+					<th id="input_label"></th>
+					<th>Expected</th>
+					<th>Actual</th>
+				</tr>
+				</thead>
+				<tbody id="tbody">
+					
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<div id="arrow_menu" class="arrow_menu">
+		<div>
+			<input id="if_" type="text" name="fsm-input">
+			<input style="display: none" id="out" type="text" name="fsm-input">
+		</div>
+
+		<div id="arrow-pushdown" style="display: none" role="radiogroup">
+			<input id="push_opt" type="radio" name="pushpop" value="push">
+			<label for="push_opt">Push</label><br>
+			<input id="pop_opt" type="radio" name="pushpop" value="pop" >
+			<label for="pop_opt">Pop</label>
+		</div>
+
+		<div id="tm-opts" style="display: none;" role="radiogroup">
+			<input id="tm_opt_left" type="radio" name="leftright" value="Left">
+			<label for="tm_opt_left">Left</label><br>
+			<input id="tm_opt_right" type="radio" name="leftright" value="Right" >
+			<label for="tm_opt_right">Right</label>
+		</div>
+	</div>
+
+
+	<div id="stats_menu" style="display: none">
+		<h2>Success!</h2>
+		<div id="fsm_stats"></div>
+		<table id="t_table"></table>
+		<button id='screenshot'>Take Screenshot of Automata</button>
+		<span id="stats_next_level"></span>
+	</div>
+
+	<div id="finish_menu" style="display: none;">
+		<h2>Thanks for playing!</h2>
+	</div>
+
+	<div id="game_btns">
+		<div class="btn-group">
+			<button id="step_btn">Step</button>
+			<button id="run_btn">Run</button>
+		</div>
+		
+		<div>
+			<button id="help-btn">Help</button>
+		</div>
+		
+		<div>
+			<button id="reset_sim">Reset Simulation</button>
+			<button id="clear_btn" >Clear</button>
+		</div>
+	</div>
+
+	<br>	
+	<br>
+	<div style="text-align: center;">
+		<input type="checkbox" name="darkmode" id="toggle_dark">
+		<label for="darkmode">Toggle Darkmode</label>
+	</div>
+
+	<button id='skip' style="display: none;">Skip</button>
+
+</body>
