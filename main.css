@@ -1,0 +1,151 @@
+*{
+	font-family: Optima;
+}
+
+table,td,th{
+	border: 1px solid #ddd;
+    border-collapse: collapse;
+    padding: 2px;
+}
+
+button{
+    background-color: #e7e7e7; 
+    color: black;
+    border:none;
+    padding: 5px 5px;
+    font-size: 15px;
+}
+
+button:hover{
+    background-color: grey;
+    color: white;
+}
+
+.dark-theme{
+    background-color: black;
+}
+
+.current_cell{
+    border: 2px solid black;
+}
+
+.tape{
+    height: 50px;
+    text-align: center;
+}
+
+.tape td{
+    width: 50px;
+}
+
+.highlight{
+    background-color:hsl(120,60%,70%);
+}
+
+.highlight-dark{
+    background-color:white;
+    color: black;
+}
+
+.highlight-good{
+	background-color:hsl(120,60%,70%);
+}
+
+.highlight-bad{
+	background-color:hsl(2.8, 100%, 75.1%);
+}
+
+.row{
+	display:flex;
+    flex-direction:row;
+	justify-content: center;
+}
+
+.col{
+	display:flex;
+    flex-direction:column;
+    margin: 5px;
+}
+
+.btn-group{
+
+}
+
+#arrow_menu{
+	max-width: 110px;
+	box-shadow: 5px 5px 5px 0px #888888;
+	position: absolute;
+	display:none;
+    border: 2px solid;
+    background-color:gray;
+}
+
+#arrow_menu input[type="text"]{
+	width: 45px;
+	border: none;
+}
+
+#desc{
+    max-width: 1000px;
+    height: 100px;
+    max-height: 75px;
+    overflow-y: scroll;
+}
+
+#stats_menu{
+    position: absolute;
+    left: 45%;
+    top: 250px;
+    background-color: white;
+    border: solid;
+    padding: 10px;
+}
+
+#finish_menu{
+    position: absolute;
+    left: 45%;
+    top: 250px;
+    background-color: white;
+    border: solid;
+    padding: 10px;
+}
+
+#stack{
+    width: 50px;
+}
+
+#stack_inner{
+    text-align: center;
+}
+
+#game_btns{
+    display:flex;
+    justify-content: space-around;
+    flex-direction:row;
+    max-width: 1000px;
+    margin-left: 100px;
+}
+
+#branches button{
+    margin-left: 5px;
+}
+
+#help{
+    border: solid;
+    padding: 5px;
+    max-width: 800px;
+    position: absolute;
+    z-index: 9999;
+    background-color: white;
+    height: 600px;
+    overflow-y: scroll;
+}
+
+#welcome{
+    position: absolute;
+    max-width: 500px;
+    background-color: white;
+    border: solid;
+    padding: 10px;
+}
+
