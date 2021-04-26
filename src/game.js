@@ -667,6 +667,7 @@ function loadNext(){
 	}
 
 	userStats.current_level_index++;
+	userStats.current_level = gameManager.current_level;
 	localStorage.setItem('gamestate', `{ "current_level" : "${gameManager.current_level}" }`);
 }
 
