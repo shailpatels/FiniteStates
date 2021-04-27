@@ -1,6 +1,6 @@
 import {LevelMap} from './support.js';
 
-const server = 'http://104.131.66.133';
+const server = 'https://finitestatesserver.com';
 const internet_conn = true;
 
 export function sendData(d){
