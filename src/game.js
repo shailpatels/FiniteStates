@@ -252,7 +252,7 @@ function init(){
 		saveStats(userStats);
 	})
 
-	localStorage.setItem('gamestate', `{ "current_level" : "pd-1" }`);
+	//localStorage.setItem('gamestate', `{ "current_level" : "pd-1" }`);
 	//localStorage.clear();	
 	if(!localStorage.getItem('gamestate')){
 
