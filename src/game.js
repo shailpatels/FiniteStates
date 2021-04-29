@@ -252,7 +252,7 @@ function init(){
 		saveStats(userStats);
 	})
 
-	//localStorage.setItem('gamestate', `{ "current_level" : "tm-1" }`);
+	localStorage.setItem('gamestate', `{ "current_level" : "pd-1" }`);
 	//localStorage.clear();	
 	if(!localStorage.getItem('gamestate')){
 
@@ -721,6 +721,7 @@ function handleToggleDarkMode(){
 		document.getElementById('canvas').style.border = 'thin solid white';
 		document.getElementById('stats_menu').style.backgroundColor = 'black';
 		document.getElementById('help').style.backgroundColor = 'black';
+        document.getElementById("welcome").style.display = "black";
 	}else{
 		document.body.style.backgroundColor = 'white';
 		if(API.config['tm'])
@@ -728,6 +729,7 @@ function handleToggleDarkMode(){
 		document.getElementById('canvas').style.border = 'thin solid black';
 		document.getElementById('stats_menu').style.backgroundColor = 'white';
 		document.getElementById('help').style.backgroundColor = 'white';
+        document.getElementById("welcome").style.display = "white";
 	}
 }
 
