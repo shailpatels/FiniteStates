@@ -31,7 +31,7 @@ jobs:
           cp -r node_modules dist-ng
           cp index.html main.css dist-ng
           sed 's/"website"/"ng"/' dist-ng/src/stats_recorder.js
-          "document.getElementById('toggle_dark').click()" >> dist-ng/src/game.js
+          echo "document.getElementById('toggle_dark').click()" >> dist-ng/src/game.js
           
       - name: Store
         run: |
