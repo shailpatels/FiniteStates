@@ -7,26 +7,41 @@ on: workflow_dispatch
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        type: ['io', 'ng']
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Create deployment
+      - name: Create deployment itch-io
         run: |
-          mkdir dist-"${{ matrix.node }}"
-          cp LICENSE dist-"${{ matrix.node }}"
-          cp -r fent-randexp dist-"${{ matrix.node }}"
-          cp -r src dist-"${{ matrix.node }}"
-          cp -r node_modules dist-"${{ matrix.node }}"
-          cp index.html main.css dist-"${{ matrix.node }}"
-          sed 's/"website"/"${{ matrix.node }}"/' dist-${{ matrix.node }}/src/stats_recoder.js
+          mkdir dist-io
+          cp LICENSE dist-io
+          cp -r fent-randexp dist-io
+          cp -r src dist-io
+          cp -r node_modules dist-io
+          cp index.html main.css dist-io
+          sed 's/"website"/"io"/' dist-io/src/stats_recorder.js
           
-      - name: Update deployment
-        if: ${{ matrix.node }} == ng
+          
+      - name: Create deployment newgrounds
         run: |
-          "document.getElementById('toggle_dark').click()" >> dist-${{ matrix.node }}/src/game.js
-
+          mkdir dist-ng
+          cp LICENSE dist-ng
+          cp -r fent-randexp dist-ng
+          cp -r src dist-ng
+          cp -r node_modules dist-ng
+          cp index.html main.css dist-ng
+          sed 's/"website"/"ng"/' dist-ng/src/stats_recorder.js
+          echo "document.getElementById('toggle_dark').click()" >> dist-ng/src/game.js
+          
+      - name: Store
+        run: |
+          zip -r dist-ng.zip dist-ng
+          zip -r dist-io.zip dist-io
+          
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            dist-ng.zip
+            dist-io.zip
