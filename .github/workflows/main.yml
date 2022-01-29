@@ -1,0 +1,33 @@
+# Create deploy zip
+
+name: Deploy
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        type: [io, ng]
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Create deployment
+        run: |
+          mkdir dist-${{ matrix.node }}
+          cp LICENSE dist-${{ matrix.node }}
+          cp -r fent-randexp dist-${{ matrix.node }}
+          cp -r src dist-${{ matrix.node }}
+          cp -r node_modules dist-${{ matrix.node }}
+          cp index.html main.css dist-${{ matrix.node }}
+          sed 's/"website"/"${{ matrix.node }}"/' dist-${{ matrix.node }}/src/stats_recoder.js
+          
+      - name: Update deployment
+        if: ${{ matrix.node }} == ng
+        run: |
+          "document.getElementById('toggle_dark').click()" >> dist-${{ matrix.node }}/src/game.js
+
