@@ -19,7 +19,7 @@ jobs:
           cp -r src dist-io
           cp -r node_modules dist-io
           cp index.html main.css dist-io
-          sed 's/"website"/"io"/' dist-io/src/stats_recoder.js
+          sed 's/"website"/"io"/' dist-io/src/stats_recorder.js
           
           
       - name: Create deployment newgrounds
@@ -30,7 +30,7 @@ jobs:
           cp -r src dist-ng
           cp -r node_modules dist-ng
           cp index.html main.css dist-ng
-          sed 's/"website"/"ng"/' dist-ng/src/stats_recoder.js
+          sed 's/"website"/"ng"/' dist-ng/src/stats_recorder.js
           "document.getElementById('toggle_dark').click()" >> dist-ng/src/game.js
           
       - name: Store
