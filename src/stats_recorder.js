@@ -1,7 +1,10 @@
 import {LevelMap} from './support.js';
 
-const server = 'http://104.131.66.133';
-const internet_conn = true;
+//Code to save a players anon game states to a remote server
+//Enter the IP address for server and set "internet_conn" to true
+
+const server = '';
+const internet_conn = false;
 
 export function sendData(d){
 
@@ -13,7 +16,7 @@ export function sendData(d){
 	fetch(server,{
 		method : 'POST',
 		headers : {
-      		'Content-Type': 'application/json'
+			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify(d)
 	}).then((response) => {

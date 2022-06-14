@@ -252,8 +252,6 @@ function init(){
 		saveStats(userStats);
 	})
 
-	//localStorage.setItem('gamestate', `{ "current_level" : "tm-1" }`);
-	//localStorage.clear();	
 	if(!localStorage.getItem('gamestate')){
 
 		displayWelcome();
@@ -261,7 +259,8 @@ function init(){
 		loadLevel( gameManager.getLevel('dfa-intro') );
 		unloadFunc = dfa.loadIntro();
 	}
-	else{
+	else
+	{
 		let gamestate = JSON.parse(localStorage.getItem('gamestate'));
 		gameManager.current_level = gamestate['current_level'];
 
@@ -282,7 +281,6 @@ function init(){
 		}
 	}
 
-	//localStorage.removeItem('userStats');
 	if(!localStorage.getItem('userStats')){
 		userStats = new UserStats();
 		userStats.current_level = gameManager.current_level;
@@ -353,7 +351,6 @@ function init(){
         userStats.num_screenshots ++;
     });
 
-	//document.getElementById('stats_menu').style.display = 'none';
 	document.getElementById('pop_opt').addEventListener('keydown', handleTablFromSecOpt);
 	document.getElementById('tm_opt_right').addEventListener('keydown', handleTablFromSecOpt);
 	function handleTablFromSecOpt(e){
@@ -401,8 +398,14 @@ function init(){
   		sendData(statsToJson(userStats));
 	});
 
-	console.log(userStats.course);
 	handleToggleDarkMode();
+
+	document.getElementById('clear-progress-btn').addEventListener('click', () => {
+		//option to remove user progress
+		localStorage.removeItem('userStats');
+		localStorage.removeItem('gamestate');
+		window.location.reload();
+	});
 }
 
 
