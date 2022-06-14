@@ -670,6 +670,7 @@ function loadNext(){
 	}
 
 	userStats.current_level_index++;
+	userStats.current_level = gameManager.current_level;
 	localStorage.setItem('gamestate', `{ "current_level" : "${gameManager.current_level}" }`);
 }
 
@@ -723,6 +724,7 @@ function handleToggleDarkMode(){
 		document.getElementById('canvas').style.border = 'thin solid white';
 		document.getElementById('stats_menu').style.backgroundColor = 'black';
 		document.getElementById('help').style.backgroundColor = 'black';
+        document.getElementById("welcome").style.display = "black";
 	}else{
 		document.body.style.backgroundColor = 'white';
 		if(API.config['tm'])
@@ -730,6 +732,7 @@ function handleToggleDarkMode(){
 		document.getElementById('canvas').style.border = 'thin solid black';
 		document.getElementById('stats_menu').style.backgroundColor = 'white';
 		document.getElementById('help').style.backgroundColor = 'white';
+        document.getElementById("welcome").style.display = "white";
 	}
 }
 

@@ -52,7 +52,7 @@ export class UserStats{
 	  });
 	}
 
-	constructor(){
+	constructor(seed = null){
 		this.user_id = this.uuidv4();
 		this.num_screenshots = 0;
 		this.num_levels_completed = 0;
@@ -60,15 +60,16 @@ export class UserStats{
 		this.num_errors = 0;
 		this.start_time = new Date().toString();
 		this.player_knowledge = 5;
-		this.course = this.genCourse();
+		this.course = this.genCourse(seed);
 		this.current_level_index = 0;
 		this.src = "website";
 	}
 
-	genCourse(){
-		let seed =  Math.floor(Math.random() * 3);
+	genCourse(seed = null){
+		if(seed === null)
+			seed =  Math.floor(Math.random() * 3);
+
 		let ret = [];
-		console.log(seed)
 		for(let x in LevelMap){
 
 			if(x.includes('intro')){
@@ -88,7 +89,6 @@ export class UserStats{
 				if(lev === 'dfa-2-2')
 					continue;
 
-				//console.log("adding" , x)
 				ret.push(x);
 			}else if(seed === 1){
 				
@@ -105,10 +105,8 @@ export class UserStats{
 				if(lev === 'dfa-2-2')
 					continue;
 
-				//console.log("adding" , x)
 				ret.push(x);
 			}else if(seed === 2){
-				//console.log(lev)
 				if(lev === 'dfa-1' || lev === 'pd-1' || lev === 'nfa-3-2' || lev === 'pd-3' || lev === 'pd-5-2'){
 					continue;
 				}
@@ -125,7 +123,6 @@ export class UserStats{
 				if(lev === 'nfa-3' || lev=='nfa-3-2' || lev==='pd-5')
 					continue;
 
-				//console.log('adding ' , x);
 				ret.push(x);
 				
 			}
@@ -136,6 +133,7 @@ export class UserStats{
 
 	}
 }
+
 
 export function saveStats(s){
 	let data = {};

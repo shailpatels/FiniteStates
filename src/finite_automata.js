@@ -170,7 +170,7 @@ export function loadIntro(){
 		}
 
 		desc.innerHTML += `<p>Enter the symbol 'i' for one transition and the symbol '!' for the other.
-		As long as there is 1 matching symbol, the machine will step forward. Now press the 'step' button 
+		As long as there is 1 matching symbol, the machine will step forward. Now press the 'step' or 'run' button 
 		to simulate the DFA. The DFA should
 		accept the string and update the IO table on the right after a 3 steps. If not, press the 'clear' 
 		button to restart.</p>`;
@@ -229,7 +229,7 @@ export function loadNFAIntro(){
 			return;
 		}	
 
-		desc.innerHTML += `<p>Now step through the machine, notice each branch is listed above the canvas. You
+		desc.innerHTML += `<p>Now step through the machine or press 'Run', notice each branch is listed above the canvas. You
 		can click on each branch to inspect which symbol and which node its currently on. Notice that every 
 		branch is indepedent from each other and the NFA will always branch when there's more than one option to take.
 		Press Run to move to the next level, press clear to restart this level. The 'all' branch button will show every node
